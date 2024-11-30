@@ -2,6 +2,7 @@ package cn.cat.middleware.sdk.test;
 
 import cn.cat.middleware.sdk.domain.model.ChatCompletionSyncResponse;
 import cn.cat.middleware.sdk.types.utils.BearerTokenUtils;
+import cn.cat.middleware.sdk.types.utils.WXAccessTokenUtils;
 import com.alibaba.fastjson2.JSON;
 import org.junit.Test;
 
@@ -12,6 +13,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class ApiTest {
 
@@ -29,7 +33,7 @@ public class ApiTest {
         String inputLine;
 
         StringBuilder content = new StringBuilder();
-        while ((inputLine = in.readLine()) != null){
+        while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
         }
 
@@ -39,6 +43,89 @@ public class ApiTest {
         ChatCompletionSyncResponse response = JSON.parseObject(content.toString(), ChatCompletionSyncResponse.class);
         System.out.println(response.getChoices().get(0).getMessage().getContent());
 
+    }
+
+    @Test
+    public void test_wx() {
+        String accessToken = WXAccessTokenUtils.getAccessToken();
+        System.out.println(accessToken);
+
+        Message message = new Message();
+        message.put("project", "big-market");
+        message.put("review", "feat: 新加功能");
+
+        String url = String.format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s", accessToken);
+        sendPostRequest(url, JSON.toJSONString(message));
+    }
+
+    public static class Message {
+        private String touser = "o8wmS6Cwn5x5eM5xKnMEjpto3n_Y";
+        private String template_id = "CMyLaE3mM4i-PnYShKjCrDAj5oBeY5xqagjTZ4bQPck";
+        private String url = "https://github.com/CatCatchFish/openai-code-review-log/blob/main/2024-11-30/K6gedmaBQLK9.md";
+        private Map<String, Map<String, String>> data = new HashMap<>();
+
+        public void put(String key, String value) {
+            data.put(key, new HashMap<String, String>() {
+                {
+                    put("value", value);
+                }
+            });
+        }
+
+        public String getTouser() {
+            return touser;
+        }
+
+        public void setTouser(String touser) {
+            this.touser = touser;
+        }
+
+        public String getTemplate_id() {
+            return template_id;
+        }
+
+        public void setTemplate_id(String template_id) {
+            this.template_id = template_id;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public Map<String, Map<String, String>> getData() {
+            return data;
+        }
+
+        public void setData(Map<String, Map<String, String>> data) {
+            this.data = data;
+        }
+    }
+
+    private static void sendPostRequest(String urlString, String jsonBody) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json; utf-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoOutput(true);
+
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            }
+
+            try (Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name())) {
+                String response = scanner.useDelimiter("\\A").next();
+                System.out.println(response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static HttpURLConnection getHttpURLConnection(String token) throws IOException {
@@ -55,7 +142,7 @@ public class ApiTest {
                 + "]"
                 + "}";
 
-        try(OutputStream os = connection.getOutputStream()){
+        try (OutputStream os = connection.getOutputStream()) {
             byte[] input = jsonInpuString.getBytes(StandardCharsets.UTF_8);
             os.write(input);
         }
