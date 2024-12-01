@@ -1,8 +1,8 @@
-package cn.cat.middleware.sdk.domain.model;
+package cn.cat.middleware.sdk.infrastructure.openai.dto;
 
 import java.util.List;
 
-public class ChatCompletionSyncResponse {
+public class ChatCompletionSyncResponseDTO {
     private List<Choice> choices;
 
     public static class Choice {

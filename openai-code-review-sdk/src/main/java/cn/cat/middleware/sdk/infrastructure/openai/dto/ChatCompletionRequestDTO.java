@@ -1,8 +1,10 @@
-package cn.cat.middleware.sdk.domain.model;
+package cn.cat.middleware.sdk.infrastructure.openai.dto;
+
+import cn.cat.middleware.sdk.domain.model.Model;
 
 import java.util.List;
 
-public class ChatCompletionRequest {
+public class ChatCompletionRequestDTO {
 
     private String model = Model.GLM_4_PLUS.getCode();
     private List<Prompt> messages;

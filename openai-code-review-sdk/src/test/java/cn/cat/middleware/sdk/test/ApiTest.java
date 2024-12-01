@@ -1,6 +1,6 @@
 package cn.cat.middleware.sdk.test;
 
-import cn.cat.middleware.sdk.domain.model.ChatCompletionSyncResponse;
+import cn.cat.middleware.sdk.infrastructure.openai.dto.ChatCompletionSyncResponseDTO;
 import cn.cat.middleware.sdk.types.utils.BearerTokenUtils;
 import cn.cat.middleware.sdk.types.utils.WXAccessTokenUtils;
 import com.alibaba.fastjson2.JSON;
@@ -40,7 +40,7 @@ public class ApiTest {
         in.close();
         connection.disconnect();
 
-        ChatCompletionSyncResponse response = JSON.parseObject(content.toString(), ChatCompletionSyncResponse.class);
+        ChatCompletionSyncResponseDTO response = JSON.parseObject(content.toString(), ChatCompletionSyncResponseDTO.class);
         System.out.println(response.getChoices().get(0).getMessage().getContent());
 
     }
@@ -55,7 +55,7 @@ public class ApiTest {
         message.put("review", "feat: 新加功能");
 
         String url = String.format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s", accessToken);
-        sendPostRequest(url, JSON.toJSONString(message));
+        //sendPostRequest(url, JSON.toJSONString(message));
     }
 
     public static class Message {
