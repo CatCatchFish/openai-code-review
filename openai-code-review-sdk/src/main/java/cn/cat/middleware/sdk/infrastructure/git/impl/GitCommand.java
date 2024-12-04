@@ -14,6 +14,8 @@ import java.util.Date;
 public class GitCommand implements BaseGitOperation {
     private static final Logger logger = LoggerFactory.getLogger(GitCommand.class);
 
+    private Git git;
+
     private final String githubReviewLogUri;
     private final String githubToken;
     private final String project;
@@ -70,12 +72,14 @@ public class GitCommand implements BaseGitOperation {
     }
 
     public String commitAndPush(String recommend) throws Exception {
-        // JGit 库从远程 Git 仓库克隆代码
-        Git git = Git.cloneRepository()
-                .setURI(githubReviewLogUri + ".git")
-                .setDirectory(new File("repo"))
-                .setCredentialsProvider(new UsernamePasswordCredentialsProvider(githubToken, ""))
-                .call();
+        if (git == null) {
+            // JGit 库从远程 Git 仓库克隆代码
+            git = Git.cloneRepository()
+                    .setURI(githubReviewLogUri + ".git")
+                    .setDirectory(new File("repo"))
+                    .setCredentialsProvider(new UsernamePasswordCredentialsProvider(githubToken, ""))
+                    .call();
+        }
 
         // 创建分支
         String dateFolderName = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
