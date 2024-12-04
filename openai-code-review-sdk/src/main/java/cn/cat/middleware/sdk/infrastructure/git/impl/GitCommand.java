@@ -1,5 +1,6 @@
-package cn.cat.middleware.sdk.infrastructure.git;
+package cn.cat.middleware.sdk.infrastructure.git.impl;
 
+import cn.cat.middleware.sdk.infrastructure.git.BaseGitOperation;
 import cn.cat.middleware.sdk.types.utils.RandomStringUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
@@ -10,7 +11,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class GitCommand {
+public class GitCommand implements BaseGitOperation {
     private static final Logger logger = LoggerFactory.getLogger(GitCommand.class);
 
     private final String githubReviewLogUri;

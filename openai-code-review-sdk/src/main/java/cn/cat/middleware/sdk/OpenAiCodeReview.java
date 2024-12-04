@@ -1,7 +1,9 @@
 package cn.cat.middleware.sdk;
 
 import cn.cat.middleware.sdk.domain.service.impl.OpenAiCodeReviewService;
-import cn.cat.middleware.sdk.infrastructure.git.GitCommand;
+import cn.cat.middleware.sdk.infrastructure.git.BaseGitOperation;
+import cn.cat.middleware.sdk.infrastructure.git.impl.GitCommand;
+import cn.cat.middleware.sdk.infrastructure.git.impl.GitRestAPIOperation;
 import cn.cat.middleware.sdk.infrastructure.openai.IOpenAI;
 import cn.cat.middleware.sdk.infrastructure.openai.impl.ChatGLM;
 import cn.cat.middleware.sdk.infrastructure.weixin.WeiXin;
@@ -33,7 +35,11 @@ public class OpenAiCodeReview {
 
         IOpenAI openAI = new ChatGLM(getEnv("CHATGLM_APIHOST"), getEnv("CHATGLM_APIKEYSECRET"));
 
-        OpenAiCodeReviewService openAiCodeReviewService = new OpenAiCodeReviewService(gitCommand, openAI, weiXin);
+        String codeCheckCommitUrl = getEnv("GITHUB_CHECK_COMMIT_URL") + getEnv("COMMIT_BRANCH");
+        logger.info("codeCheckCommitUrl: " + codeCheckCommitUrl);
+        BaseGitOperation baseGitOperation = new GitRestAPIOperation(codeCheckCommitUrl, getEnv("GITHUB_TOKEN"));
+
+        OpenAiCodeReviewService openAiCodeReviewService = new OpenAiCodeReviewService(gitCommand, openAI, weiXin, baseGitOperation);
         openAiCodeReviewService.exec();
 
         logger.info("openai-code-review done!");

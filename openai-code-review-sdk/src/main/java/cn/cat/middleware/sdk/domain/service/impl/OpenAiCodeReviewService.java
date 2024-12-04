@@ -2,7 +2,8 @@ package cn.cat.middleware.sdk.domain.service.impl;
 
 import cn.cat.middleware.sdk.domain.model.Model;
 import cn.cat.middleware.sdk.domain.service.AbstractOpenAiCodeReviewService;
-import cn.cat.middleware.sdk.infrastructure.git.GitCommand;
+import cn.cat.middleware.sdk.infrastructure.git.BaseGitOperation;
+import cn.cat.middleware.sdk.infrastructure.git.impl.GitCommand;
 import cn.cat.middleware.sdk.infrastructure.openai.IOpenAI;
 import cn.cat.middleware.sdk.infrastructure.openai.dto.ChatCompletionRequestDTO;
 import cn.cat.middleware.sdk.infrastructure.openai.dto.ChatCompletionSyncResponseDTO;
@@ -15,13 +16,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
-    public OpenAiCodeReviewService(GitCommand gitCommand, IOpenAI openAI, WeiXin weiXin) {
-        super(gitCommand, openAI, weiXin);
+    public OpenAiCodeReviewService(GitCommand gitCommand, IOpenAI openAI, WeiXin weiXin, BaseGitOperation baseGitOperation) {
+        super(gitCommand, openAI, weiXin, baseGitOperation);
     }
 
     @Override
     protected String getDiffCode() throws IOException, InterruptedException {
         return gitCommand.diff();
+    }
+
+    @Override
+    protected String getGitCommitApi() throws Exception {
+        return baseGitOperation.diff();
     }
 
     @Override
