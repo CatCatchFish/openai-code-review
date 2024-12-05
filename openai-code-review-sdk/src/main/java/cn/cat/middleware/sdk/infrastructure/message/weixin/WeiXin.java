@@ -1,6 +1,6 @@
-package cn.cat.middleware.sdk.infrastructure.weixin;
+package cn.cat.middleware.sdk.infrastructure.message.weixin;
 
-import cn.cat.middleware.sdk.infrastructure.weixin.dto.TemplateMessageDTO;
+import cn.cat.middleware.sdk.infrastructure.message.weixin.dto.TemplateMessageDTO;
 import cn.cat.middleware.sdk.types.utils.WXAccessTokenUtils;
 import com.alibaba.fastjson2.JSON;
 import org.slf4j.Logger;

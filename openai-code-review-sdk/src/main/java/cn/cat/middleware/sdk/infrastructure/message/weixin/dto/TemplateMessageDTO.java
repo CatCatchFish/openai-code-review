@@ -1,4 +1,4 @@
-package cn.cat.middleware.sdk.infrastructure.weixin.dto;
+package cn.cat.middleware.sdk.infrastructure.message.weixin.dto;
 
 import java.util.HashMap;
 import java.util.Map;

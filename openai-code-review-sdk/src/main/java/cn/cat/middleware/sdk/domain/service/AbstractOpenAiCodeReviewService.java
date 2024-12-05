@@ -2,8 +2,8 @@ package cn.cat.middleware.sdk.domain.service;
 
 import cn.cat.middleware.sdk.infrastructure.git.BaseGitOperation;
 import cn.cat.middleware.sdk.infrastructure.git.impl.GitCommand;
+import cn.cat.middleware.sdk.infrastructure.message.IMessageStrategy;
 import cn.cat.middleware.sdk.infrastructure.openai.IOpenAI;
-import cn.cat.middleware.sdk.infrastructure.weixin.WeiXin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,13 +14,13 @@ public abstract class AbstractOpenAiCodeReviewService implements IOpenAiCodeRevi
 
     protected final GitCommand gitCommand;
     protected final IOpenAI openAI;
-    protected final WeiXin weiXin;
+    protected final IMessageStrategy messageStrategy;
     protected final BaseGitOperation baseGitOperation;
 
-    public AbstractOpenAiCodeReviewService(GitCommand gitCommand, IOpenAI openAI, WeiXin weiXin, BaseGitOperation baseGitOperation) {
+    public AbstractOpenAiCodeReviewService(GitCommand gitCommand, IOpenAI openAI, IMessageStrategy messageStrategy, BaseGitOperation baseGitOperation) {
         this.gitCommand = gitCommand;
         this.openAI = openAI;
-        this.weiXin = weiXin;
+        this.messageStrategy = messageStrategy;
         this.baseGitOperation = baseGitOperation;
     }
 
@@ -64,6 +64,6 @@ public abstract class AbstractOpenAiCodeReviewService implements IOpenAiCodeRevi
 
     protected abstract String recordCodeReview(String recommend) throws Exception;
 
-    protected abstract void pushMessage(String logUrl) throws Exception;
+    protected abstract void pushMessage(String logUrl);
 
 }
