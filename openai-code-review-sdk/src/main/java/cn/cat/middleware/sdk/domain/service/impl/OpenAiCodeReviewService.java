@@ -10,7 +10,6 @@ import cn.cat.middleware.sdk.infrastructure.openai.dto.ChatCompletionRequestDTO;
 import cn.cat.middleware.sdk.infrastructure.openai.dto.ChatCompletionSyncResponseDTO;
 import cn.cat.middleware.sdk.infrastructure.message.weixin.dto.TemplateMessageDTO;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,12 +20,7 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
     }
 
     @Override
-    protected String getDiffCode() throws IOException, InterruptedException {
-        return gitCommand.diff();
-    }
-
-    @Override
-    protected String getGitCommitApi() throws Exception {
+    protected String getDiffCode() throws Exception {
         return baseGitOperation.diff();
     }
 
