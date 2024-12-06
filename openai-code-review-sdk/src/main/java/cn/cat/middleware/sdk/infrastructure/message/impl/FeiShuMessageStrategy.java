@@ -22,7 +22,7 @@ public class FeiShuMessageStrategy implements IMessageStrategy {
         try {
             String botWebhook = EnvUtils.getEnv("FEISHU_BOT_WEBHOOK");
             FeiShu feiShu = new FeiShu(botWebhook);
-            feiShu.sendTestMessage(logUrl);
+            feiShu.sendTestMessage(logUrl, data);
         } catch (Exception e) {
             logger.error("发送飞书消息失败", e);
         }
