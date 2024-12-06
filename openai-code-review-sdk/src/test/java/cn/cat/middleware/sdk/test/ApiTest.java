@@ -42,7 +42,6 @@ public class ApiTest {
 
         ChatCompletionSyncResponseDTO response = JSON.parseObject(content.toString(), ChatCompletionSyncResponseDTO.class);
         System.out.println(response.getChoices().get(0).getMessage().getContent());
-
     }
 
     @Test
