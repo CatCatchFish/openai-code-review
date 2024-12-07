@@ -4,6 +4,7 @@ import cn.cat.middleware.sdk.infrastructure.openai.IOpenAI;
 import cn.cat.middleware.sdk.infrastructure.openai.dto.ChatCompletionRequestDTO;
 import cn.cat.middleware.sdk.infrastructure.openai.dto.ChatCompletionSyncResponseDTO;
 import cn.cat.middleware.sdk.types.utils.BearerTokenUtils;
+import cn.cat.middleware.sdk.types.utils.DefaultHttpUtils;
 import com.alibaba.fastjson2.JSON;
 
 import java.io.BufferedReader;
@@ -12,6 +13,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChatGLM implements IOpenAI {
     private final String apiHost;
@@ -27,29 +30,13 @@ public class ChatGLM implements IOpenAI {
     public ChatCompletionSyncResponseDTO completions(ChatCompletionRequestDTO requestDTO) throws Exception {
         String token = BearerTokenUtils.getToken(apiKeySecret);
 
-        URL url = new URL(apiHost);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Authorization", "Bearer " + token);
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
-        connection.setDoOutput(true);
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + token);
+        headers.put("Content-Type", "application/json");
+        headers.put("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
 
-        try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = JSON.toJSONString(requestDTO).getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
-        }
+        String result = DefaultHttpUtils.executePostRequest(apiHost, headers, requestDTO);
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String inputLine;
-        StringBuilder content = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-
-        in.close();
-        connection.disconnect();
-
-        return JSON.parseObject(content.toString(), ChatCompletionSyncResponseDTO.class);
+        return JSON.parseObject(result, ChatCompletionSyncResponseDTO.class);
     }
 }
