@@ -39,15 +39,15 @@ public class DefaultHttpUtils {
     }
 
     private static String getResult(HttpURLConnection connection) throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String inputLine;
-        StringBuilder content = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String inputLine;
+            StringBuilder content = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
 
-        in.close();
-        connection.disconnect();
-        return content.toString();
+            connection.disconnect();
+            return content.toString();
+        }
     }
 }

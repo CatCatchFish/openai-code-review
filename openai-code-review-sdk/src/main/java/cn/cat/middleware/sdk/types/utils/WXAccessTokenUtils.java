@@ -37,9 +37,6 @@ public class WXAccessTokenUtils {
                 }
                 in.close();
 
-                // Print the response
-                System.out.println("Response: " + response.toString());
-
                 Token token = JSON.parseObject(response.toString(), Token.class);
 
                 return token.getAccess_token();
