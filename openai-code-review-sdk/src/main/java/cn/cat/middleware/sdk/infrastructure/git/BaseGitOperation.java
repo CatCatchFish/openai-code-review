@@ -4,4 +4,6 @@ public interface BaseGitOperation {
 
     String diff() throws Exception;
 
+    String writeComment(String comment) throws Exception;
+
 }

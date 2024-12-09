@@ -19,6 +19,7 @@ import java.util.Map;
 import static cn.cat.middleware.sdk.types.utils.EnvUtils.getEnv;
 
 public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
+
     public OpenAiCodeReviewService(GitCommand gitCommand, IOpenAI openAI, IMessageStrategy messageStrategy, BaseGitOperation baseGitOperation) {
         super(gitCommand, openAI, messageStrategy, baseGitOperation);
     }
@@ -62,7 +63,10 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
 
     @Override
     protected String recordCodeReview(String recommend) throws Exception {
-        return gitCommand.commitAndPush(recommend);
+        // 写入提交记录，供开发人员查看
+        baseGitOperation.writeComment(recommend);
+        // 写入日志仓库，供管理员查看
+        return gitCommand.writeComment(recommend);
     }
 
     @Override
@@ -74,4 +78,5 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
         TemplateMessageDTO.put(data, TemplateMessageDTO.TemplateKey.COMMIT_MESSAGE, gitCommand.getMessage());
         messageStrategy.sendMessage(logUrl, data);
     }
+
 }

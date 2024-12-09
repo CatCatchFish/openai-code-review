@@ -32,6 +32,7 @@ public class GitCommand implements BaseGitOperation {
         this.message = message;
     }
 
+    @Override
     public String diff() throws IOException, InterruptedException {
         Process diffProcess = getProcess();
 
@@ -49,6 +50,11 @@ public class GitCommand implements BaseGitOperation {
         }
 
         return diffCode.toString();
+    }
+
+    @Override
+    public String writeComment(String comment) throws Exception {
+        return this.commitAndPush(comment);
     }
 
     /**
