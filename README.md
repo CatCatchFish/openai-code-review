@@ -4,6 +4,26 @@
 
 ​		当开发者在提交合并分支的代码，则触发代码评审，并写入评审日志文件。完成后发送消息通知，点击<详情>查看评审细节。这样就可用方便知道本次开发的代码是否有问题啦。（该项目只能做辅助作用，而不能完全依赖该审核结果）
 
+#### 提示词优化：
+
+![](img/模板模式.png)
+
+使用案例：
+
+```java
+PromptTemplate promptTemplate = PromptTemplate.from("你是一个{{language}}高级编程架构师，精通各类场景方案和架构设计，请你辅助用户评审代码。");
+Map<String, Object> params = new HashMap<>();
+params.put("language", getEnv("PROJECT_LANGUAGE"));
+ChatCompletionRequestDTO.Prompt prompt = promptTemplate.apply(Role.SYSTEM, params);
+```
+
+使用提示词模板的好处：
+
+1. **效率提升**：通过预设模板，可以快速应用相应的提示词，减少编写提示词的时间，自动化评审流程。
+2. **标准化输出**：模板化提示词可以让AI的评审结果更加一致，减少因不同提示导致的评审质量不稳定。
+3. **可扩展性**：提示词模板可以根据项目需求和AI能力不断扩展和优化，适应不同的代码风格和评审要求。
+4. **降低学习曲线**：使用模板让没有AI深度经验的开发者也可以轻松上手AI代码评审，提高技术推广的便捷性。
+
 ### 二、使用方法
 
 1、复制本仓库`.github/workflows`文件夹下的`main-remote-jar.yml`到你的项目同位置目录下
