@@ -1,7 +1,7 @@
 package cn.cat.middleware.sdk.test;
 
-import cn.cat.middleware.sdk.infrastructure.openai.prompt.DefaultTemplateRender;
-import cn.cat.middleware.sdk.infrastructure.openai.prompt.TemplateRender;
+import cn.cat.middleware.sdk.infrastructure.llmmodel.common.prompt.DefaultTemplateRender;
+import cn.cat.middleware.sdk.infrastructure.llmmodel.common.prompt.TemplateRender;
 import org.junit.Test;
 
 import java.util.HashMap;

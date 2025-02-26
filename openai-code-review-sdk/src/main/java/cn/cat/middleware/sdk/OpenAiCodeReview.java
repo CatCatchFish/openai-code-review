@@ -4,10 +4,10 @@ import cn.cat.middleware.sdk.domain.service.impl.OpenAiCodeReviewService;
 import cn.cat.middleware.sdk.infrastructure.git.BaseGitOperation;
 import cn.cat.middleware.sdk.infrastructure.git.impl.GitCommand;
 import cn.cat.middleware.sdk.infrastructure.git.impl.GitRestAPIOperation;
+import cn.cat.middleware.sdk.infrastructure.llmmodel.common.chat.ChatLanguageModel;
+import cn.cat.middleware.sdk.infrastructure.llmmodel.zhipu.ZhipuAIModel;
 import cn.cat.middleware.sdk.infrastructure.message.IMessageStrategy;
 import cn.cat.middleware.sdk.infrastructure.message.MessageFactory;
-import cn.cat.middleware.sdk.infrastructure.openai.IOpenAI;
-import cn.cat.middleware.sdk.infrastructure.openai.impl.ChatGLM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class OpenAiCodeReview {
                 getEnv("COMMIT_MESSAGE")
         );
 
-        IOpenAI openAI = new ChatGLM(getEnv("CHATGLM_APIHOST"), getEnv("CHATGLM_APIKEYSECRET"));
+        ChatLanguageModel chatLanguageModel = new ZhipuAIModel(getEnv("LLM_APIHOST"), getEnv("LLM_APIKEY"));
 
         String codeCheckCommitUrl = getEnv("GITHUB_CHECK_COMMIT_URL") + getEnv("COMMIT_BRANCH");
         logger.info("codeCheckCommitUrl: " + codeCheckCommitUrl);
@@ -37,7 +37,7 @@ public class OpenAiCodeReview {
         IMessageStrategy messageStrategy = MessageFactory.getMessageStrategy(notifyType);
 
         // 执行代码审查
-        OpenAiCodeReviewService openAiCodeReviewService = new OpenAiCodeReviewService(gitCommand, openAI, messageStrategy, baseGitOperation);
+        OpenAiCodeReviewService openAiCodeReviewService = new OpenAiCodeReviewService(gitCommand, chatLanguageModel, messageStrategy, baseGitOperation);
         openAiCodeReviewService.exec();
 
         logger.info("openai-code-review done!");

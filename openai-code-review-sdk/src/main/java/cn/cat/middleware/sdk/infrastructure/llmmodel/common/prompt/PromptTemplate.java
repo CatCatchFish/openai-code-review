@@ -1,11 +1,11 @@
-package cn.cat.middleware.sdk.infrastructure.openai.prompt;
+package cn.cat.middleware.sdk.infrastructure.llmmodel.common.prompt;
 
-import cn.cat.middleware.sdk.domain.model.Role;
-import cn.cat.middleware.sdk.infrastructure.openai.dto.ChatCompletionRequestDTO;
+import cn.cat.middleware.sdk.infrastructure.llmmodel.common.input.Prompt;
 
 import java.util.Map;
 
 public class PromptTemplate {
+
     private static final PromptTemplateFactory FACTORY = new DefaultPromptTemplateFactory();
 
     private final String templateString;
@@ -28,11 +28,12 @@ public class PromptTemplate {
      * @param variables 变量
      * @return 提示词对象
      */
-    public ChatCompletionRequestDTO.Prompt apply(Role role, Map<String, Object> variables) {
-        return new ChatCompletionRequestDTO.Prompt(role.getCode(), templateRender.render(variables));
+    public Prompt apply(Map<String, Object> variables) {
+        return new Prompt(templateRender.render(variables));
     }
 
     public static PromptTemplate from(String template) {
         return new PromptTemplate(template);
     }
+
 }

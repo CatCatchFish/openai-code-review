@@ -1,4 +1,4 @@
-package cn.cat.middleware.sdk.infrastructure.openai.prompt;
+package cn.cat.middleware.sdk.infrastructure.llmmodel.common.prompt;
 
 import java.util.Map;
 

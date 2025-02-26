@@ -3,10 +3,10 @@ name: Build and Run OpenAiCodeReview By Main Maven Jar
 on:
   push:
     branches:
-      - master-close
+      - master
   pull_request:
     branches:
-      - master-close
+      - master
 
 jobs:
   build:
@@ -78,5 +78,5 @@ jobs:
           # 飞书机器人配置
           FEISHU_BOT_WEBHOOK: ${{ secrets.FEISHU_BOT_WEBHOOK }}
           # OpenAi - ChatGLM 配置「https://open.bigmodel.cn/api/paas/v4/chat/completions」、「https://open.bigmodel.cn/usercenter/apikeys」
-          CHATGLM_APIHOST: ${{ secrets.CHATGLM_APIHOST }}
-          CHATGLM_APIKEYSECRET: ${{ secrets.CHATGLM_APIKEYSECRET }}
+          CHATGLM_APIHOST: ${{ secrets.LLM_APIHOST }}
+          CHATGLM_APIKEYSECRET: ${{ secrets.LLM_APIKEY }}

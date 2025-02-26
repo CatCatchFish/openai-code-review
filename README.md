@@ -47,7 +47,7 @@ ChatCompletionRequestDTO.Prompt prompt = promptTemplate.apply(Role.SYSTEM, param
 
 ![](img/语言配置.png)
 
-5、配置大模型
+5、配置大模型（本项目目标对接 `ChatGLM` 以及 `DeepSeek`）
 
 [智谱大模型](https://open.bigmodel.cn/usercenter/apikeys)
 

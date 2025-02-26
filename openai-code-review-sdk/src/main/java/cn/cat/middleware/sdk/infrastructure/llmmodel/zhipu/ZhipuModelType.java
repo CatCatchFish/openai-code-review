@@ -1,6 +1,7 @@
-package cn.cat.middleware.sdk.domain.model;
+package cn.cat.middleware.sdk.infrastructure.llmmodel.zhipu;
 
-public enum Model {
+public enum ZhipuModelType {
+
     /**
      * 智谱AI 23年06月发布
      */
@@ -14,12 +15,11 @@ public enum Model {
     GLM_4_FLASH("glm-4-flash", "适用简单任务，速度最快，价格最实惠的版本，具有128k上下文"),
     GLM_4_PLUS("glm-4-plus", "适用于复杂的对话交互和深度内容创作设计的场景"),
     COGVIEW_3("cogview-3", "根据用户的文字描述生成图像,使用同步调用方式请求接口"),
-    DEEPSEEK_R1("deepseek-r1-250120", "适用于对话式内容创作的场景"),
     ;
     private final String code;
     private final String info;
 
-    Model(String code, String info) {
+    ZhipuModelType(String code, String info) {
         this.code = code;
         this.info = info;
     }
