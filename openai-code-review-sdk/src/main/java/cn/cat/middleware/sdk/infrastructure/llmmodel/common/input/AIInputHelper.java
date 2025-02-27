@@ -1,4 +1,4 @@
-package cn.cat.middleware.sdk.infrastructure.llmmodel.zhipu;
+package cn.cat.middleware.sdk.infrastructure.llmmodel.common.input;
 
 import cn.cat.middleware.sdk.infrastructure.llmmodel.common.message.AssistantChatMessage;
 import cn.cat.middleware.sdk.infrastructure.llmmodel.common.message.ChatMessage;
@@ -10,11 +10,11 @@ import cn.cat.middleware.sdk.infrastructure.llmmodel.common.text.ChatMessageText
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ZhipuAIHelper {
+public class AIInputHelper {
 
     public static List<ChatMessage> toMessages(List<ChatMessageText> texts) {
         return texts.stream()
-                .map(ZhipuAIHelper::toMessage)
+                .map(AIInputHelper::toMessage)
                 .collect(Collectors.toList());
     }
 
@@ -22,8 +22,9 @@ public class ZhipuAIHelper {
         return ChatMessageFactory.createChatMessage(text);
     }
 
-    static AIMessageText aiMessageTextFrom(ChatCompletionResponse response) {
+    public static AIMessageText aiMessageTextFrom(ChatCompletionResponse response) {
         AssistantChatMessage message = response.getChoices().get(0).getMessage();
         return new AIMessageText(message.getContent());
     }
+
 }

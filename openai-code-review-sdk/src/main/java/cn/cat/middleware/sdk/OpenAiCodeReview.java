@@ -5,7 +5,7 @@ import cn.cat.middleware.sdk.infrastructure.git.BaseGitOperation;
 import cn.cat.middleware.sdk.infrastructure.git.impl.GitCommand;
 import cn.cat.middleware.sdk.infrastructure.git.impl.GitRestAPIOperation;
 import cn.cat.middleware.sdk.infrastructure.llmmodel.common.chat.ChatLanguageModel;
-import cn.cat.middleware.sdk.infrastructure.llmmodel.zhipu.ZhipuAIModel;
+import cn.cat.middleware.sdk.infrastructure.llmmodel.deepseek.DeepSeekAIModel;
 import cn.cat.middleware.sdk.infrastructure.message.IMessageStrategy;
 import cn.cat.middleware.sdk.infrastructure.message.MessageFactory;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class OpenAiCodeReview {
                 getEnv("COMMIT_MESSAGE")
         );
 
-        ChatLanguageModel chatLanguageModel = new ZhipuAIModel(getEnv("LLM_APIHOST"), getEnv("LLM_APIKEY"));
+        ChatLanguageModel chatLanguageModel = new DeepSeekAIModel(getEnv("LLM_APIHOST"), getEnv("LLM_APIKEY"));
 
         String codeCheckCommitUrl = getEnv("GITHUB_CHECK_COMMIT_URL") + getEnv("COMMIT_BRANCH");
         logger.info("codeCheckCommitUrl: " + codeCheckCommitUrl);

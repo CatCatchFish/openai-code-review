@@ -1,4 +1,4 @@
-package cn.cat.middleware.sdk.infrastructure.llmmodel.zhipu;
+package cn.cat.middleware.sdk.infrastructure.llmmodel.deepseek;
 
 import cn.cat.middleware.sdk.infrastructure.llmmodel.common.chat.ChatLanguageModel;
 import cn.cat.middleware.sdk.infrastructure.llmmodel.common.input.AIInputHelper;
@@ -10,13 +10,13 @@ import cn.cat.middleware.sdk.infrastructure.llmmodel.common.text.ChatMessageText
 
 import java.util.List;
 
-public class ZhipuAIModel implements ChatLanguageModel {
+public class DeepSeekAIModel implements ChatLanguageModel {
 
-    private final String model = ZhipuModelType.GLM_4_PLUS.getCode();
-    private final ZhipiAIHttpClient client;
+    private final String model = DeepSeekModelType.DEEPSEEK_R1.getCode();
+    private final DeepSeekAIHttpClient client;
 
-    public ZhipuAIModel(String baseUrl, String apiKey) {
-        client = new ZhipiAIHttpClient(baseUrl, apiKey);
+    public DeepSeekAIModel(String baseUrl, String apiKey) {
+        client = new DeepSeekAIHttpClient(baseUrl, apiKey);
     }
 
     @Override
