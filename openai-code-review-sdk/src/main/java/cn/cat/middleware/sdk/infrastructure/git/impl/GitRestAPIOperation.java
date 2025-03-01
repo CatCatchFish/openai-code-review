@@ -1,16 +1,19 @@
 package cn.cat.middleware.sdk.infrastructure.git.impl;
 
-import cn.cat.middleware.sdk.infrastructure.git.BaseGitOperation;
+import cn.cat.middleware.sdk.domain.model.ExecuteCodeReviewContext;
+import cn.cat.middleware.sdk.infrastructure.git.AbstractGitOperation;
 import cn.cat.middleware.sdk.infrastructure.git.dto.CommitCommentRequestDTO;
 import cn.cat.middleware.sdk.infrastructure.git.dto.SingleCommitResponseDTO;
 import cn.cat.middleware.sdk.types.utils.DefaultHttpUtils;
 import cn.cat.middleware.sdk.types.utils.DiffParseUtil;
 import com.alibaba.fastjson2.JSON;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class GitRestAPIOperation implements BaseGitOperation {
+public class GitRestAPIOperation extends AbstractGitOperation {
 
     private final String githubRepoUrl;
     private final String githubToken;
@@ -31,6 +34,23 @@ public class GitRestAPIOperation implements BaseGitOperation {
             content.append("该文件变更代码：").append(file.getPatch()).append("\n");
         }
         return content.toString();
+    }
+
+    @Override
+    public List<ExecuteCodeReviewContext.CodeReviewFile> getFiles() throws Exception {
+        SingleCommitResponseDTO response = getCommitResponse();
+        SingleCommitResponseDTO.CommitFile[] files = response.getFiles();
+        List<ExecuteCodeReviewContext.CodeReviewFile> codeReviewFiles = new ArrayList<>();
+
+        for (SingleCommitResponseDTO.CommitFile file : files) {
+            ExecuteCodeReviewContext.CodeReviewFile codeReviewFile = new ExecuteCodeReviewContext.CodeReviewFile();
+            codeReviewFile.setFileName(file.getFilename());
+            codeReviewFile.setDiff(file.getPatch());
+            String fileContent = DefaultHttpUtils.executeGetRequest(file.getRaw_url(), new HashMap<>());
+            codeReviewFile.setFileContent(fileContent);
+            codeReviewFiles.add(codeReviewFile);
+        }
+        return codeReviewFiles;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package cn.cat.middleware.sdk;
 
 import cn.cat.middleware.sdk.domain.service.impl.OpenAiCodeReviewService;
-import cn.cat.middleware.sdk.infrastructure.git.BaseGitOperation;
+import cn.cat.middleware.sdk.infrastructure.git.AbstractGitOperation;
 import cn.cat.middleware.sdk.infrastructure.git.impl.GitCommand;
 import cn.cat.middleware.sdk.infrastructure.git.impl.GitRestAPIOperation;
 import cn.cat.middleware.sdk.infrastructure.llmmodel.common.chat.ChatLanguageModel;
@@ -30,7 +30,7 @@ public class OpenAiCodeReview {
 
         String codeCheckCommitUrl = getEnv("GITHUB_CHECK_COMMIT_URL") + getEnv("COMMIT_BRANCH");
         logger.info("codeCheckCommitUrl: " + codeCheckCommitUrl);
-        BaseGitOperation baseGitOperation = new GitRestAPIOperation(codeCheckCommitUrl, getEnv("GITHUB_TOKEN"));
+        AbstractGitOperation baseGitOperation = new GitRestAPIOperation(codeCheckCommitUrl, getEnv("GITHUB_TOKEN"));
 
         // 获取当前消息通知的类型
         String notifyType = getEnv("NOTIFY_TYPE");

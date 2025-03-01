@@ -2,7 +2,7 @@ package cn.cat.middleware.sdk.infrastructure.llmmodel.common.text;
 
 public class AIMessageText implements ChatMessageText {
 
-    private final String text;
+    private String text;
 
     public AIMessageText(String text) {
         this.text = text;
@@ -16,6 +16,11 @@ public class AIMessageText implements ChatMessageText {
     @Override
     public String text() {
         return text;
+    }
+
+    @Override
+    public void appendText(String text) {
+        this.text = this.text + text;
     }
 
 }

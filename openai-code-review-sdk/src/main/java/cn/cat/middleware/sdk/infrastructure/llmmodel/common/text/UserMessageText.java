@@ -5,7 +5,7 @@ package cn.cat.middleware.sdk.infrastructure.llmmodel.common.text;
  */
 public class UserMessageText implements ChatMessageText {
 
-    private final String text;
+    private String text;
 
     public UserMessageText(String text) {
         this.text = text;
@@ -19,6 +19,11 @@ public class UserMessageText implements ChatMessageText {
     @Override
     public String text() {
         return text;
+    }
+
+    @Override
+    public void appendText(String text) {
+        this.text += text;
     }
 
 }

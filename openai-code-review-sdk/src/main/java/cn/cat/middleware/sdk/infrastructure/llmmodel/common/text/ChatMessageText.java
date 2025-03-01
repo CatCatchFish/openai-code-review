@@ -16,4 +16,6 @@ public interface ChatMessageText {
      */
     String text();
 
+    void appendText(String text);
+
 }
