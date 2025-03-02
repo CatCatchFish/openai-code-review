@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ZhipuAIModel implements ChatLanguageModel {
 
-    private final String model = ZhipuModelType.GLM_4_PLUS.getCode();
+    private final String model = ZhipuModelType.GLM_4_FLASH.getCode();
     private final ZhipiAIHttpClient client;
 
     public ZhipuAIModel(String baseUrl, String apiKey) {

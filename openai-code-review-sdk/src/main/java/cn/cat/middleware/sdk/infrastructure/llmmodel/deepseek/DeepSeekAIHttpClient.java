@@ -2,7 +2,6 @@ package cn.cat.middleware.sdk.infrastructure.llmmodel.deepseek;
 
 import cn.cat.middleware.sdk.infrastructure.llmmodel.common.request.ChatCompletionRequest;
 import cn.cat.middleware.sdk.infrastructure.llmmodel.common.response.ChatCompletionResponse;
-import cn.cat.middleware.sdk.infrastructure.llmmodel.zhipu.ZhipiAIHttpClient;
 import cn.cat.middleware.sdk.types.utils.DefaultHttpUtils;
 import com.alibaba.fastjson2.JSON;
 import org.slf4j.Logger;
@@ -13,7 +12,7 @@ import java.util.Map;
 
 public class DeepSeekAIHttpClient {
 
-    private static final Logger logger = LoggerFactory.getLogger(ZhipiAIHttpClient.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeepSeekAIHttpClient.class);
 
     private final String baseUrl;
     private final String apiKey;

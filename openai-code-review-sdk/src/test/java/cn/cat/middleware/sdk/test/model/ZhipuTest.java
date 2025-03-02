@@ -38,7 +38,7 @@ public class ZhipuTest {
         texts.add(userMessageText);
 
         ChatCompletionRequest request = new ChatCompletionRequest();
-        request.setModel(ZhipuModelType.GLM_4_PLUS.getCode());
+        request.setModel(ZhipuModelType.GLM_4_FLASH.getCode());
         request.setMessages(AIInputHelper.toMessages(texts));
 
         ChatCompletionResponse chatCompletionResponse = client.chatCompletion(request);

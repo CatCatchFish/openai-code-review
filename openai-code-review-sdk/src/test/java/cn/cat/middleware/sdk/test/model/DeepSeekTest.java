@@ -48,24 +48,4 @@ public class DeepSeekTest {
         logger.info(JSON.toJSONString(chatCompletionResponse));
     }
 
-    @Test
-    public void test_model() {
-        String url = "https://ark.cn-beijing.volces.com/api/v3";
-        String apiKey = "4e1b90b7-8c3a-4be6-b941-d0ba4e4e12d6";
-
-        List<ChatMessageText> texts = new ArrayList<>();
-        SystemMessageText systemMessageText = new SystemMessageText(
-                "你是一个善于Java编程的程序员，请帮助用户解决问题。"
-        );
-        UserMessageText userMessageText = new UserMessageText(
-                "请用Java写一个冒泡排序"
-        );
-        texts.add(systemMessageText);
-        texts.add(userMessageText);
-
-        DeepSeekAIModel model = new DeepSeekAIModel(url, apiKey);
-        Response<AIMessageText> response = model.generate(texts);
-        logger.info(JSON.toJSONString(response.getContent().text()));
-    }
-
 }
