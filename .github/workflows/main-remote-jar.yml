@@ -3,10 +3,10 @@ name: Build and Run OpenAiCodeReview By Main Maven Jar
 on:
   push:
     branches:
-      - master-close
+      - master
   pull_request:
     branches:
-      - master-close
+      - master
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
         run: mkdir -p ./libs
 
       - name: Download openai-code-review-sdk JAR
-        run: wget -O ./libs/openai-code-review-sdk-1.1.jar https://github.com/CatCatchFish/openai-code-review/releases/download/v1.1/openai-code-review-sdk-1.1.jar
+        run: wget -O ./libs/openai-code-review-sdk-1.2.jar https://github.com/CatCatchFish/openai-code-review/releases/download/v1.2/openai-code-review-sdk-1.2.jar
 
       - name: Get repository name
         id: repo-name
@@ -54,7 +54,7 @@ jobs:
           echo "Commit message is ${{ env.COMMIT_MESSAGE }}"  
 
       - name: Run Code Review
-        run: java -jar ./libs/openai-code-review-sdk-1.1.jar
+        run: java -jar ./libs/openai-code-review-sdk-1.2.jar
         env:
           # Github 配置；GITHUB_REVIEW_LOG_URI「https://github.com/xfg-studio-project/openai-code-review-log」、GITHUB_TOKEN「https://github.com/settings/tokens」
           GITHUB_REVIEW_LOG_URI: ${{ secrets.CODE_REVIEW_LOG_URI }}
@@ -78,5 +78,5 @@ jobs:
           # 飞书机器人配置
           FEISHU_BOT_WEBHOOK: ${{ secrets.FEISHU_BOT_WEBHOOK }}
           # OpenAi - ChatGLM 配置「https://open.bigmodel.cn/api/paas/v4/chat/completions」、「https://open.bigmodel.cn/usercenter/apikeys」
-          CHATGLM_APIHOST: ${{ secrets.CHATGLM_APIHOST }}
-          CHATGLM_APIKEYSECRET: ${{ secrets.CHATGLM_APIKEYSECRET }}
+          LLM_APIHOST: ${{ secrets.LLM_APIHOST }}
+          LLM_APIKEY: ${{ secrets.LLM_APIKEY }}
